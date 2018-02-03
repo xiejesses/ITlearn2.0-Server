@@ -13,6 +13,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var shareLink = require('./routes/shareLink');
 var testJWT = require('./routes/testJWT');
+var Tags = require('./routes/tags');
+// var testNewModel = require('./routes/testNewModel');
 
 var app = express();
 
@@ -33,15 +35,18 @@ var secretOrPrivateKey = "ITlearn"  //加密token 校验token时要使用
 app.use(expressJWT({
     secret: secretOrPrivateKey   
 }).unless({
-    path: ['/token/get','/shareLink','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
+    path: ['/token/get','/tags','/testnewmodel/save','/testnewmodel/addlovelink','/testnewmodel/findlovelink','/sharelink','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
 }));
 
 
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/shareLink',shareLink)
+app.use('/sharelink',shareLink)
 app.use('/token',testJWT)
+app.use('/tags',Tags)
+
+// app.use('/testnewmodel',testNewModel)
 
 
 app.use(function (err, req, res, next) {

@@ -1,6 +1,6 @@
-/*
-**用户模型
-*/
+/**
+ * 用户模型
+ */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema;
 
