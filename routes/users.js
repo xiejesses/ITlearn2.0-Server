@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('./../models/userModel');
+// const User = require('./../models/userModel');
+const User = require('./../models/User');
 const jwt = require('jsonwebtoken');
 const moment = require('moment')
 const sha1 = require('sha1')
@@ -18,7 +19,8 @@ router.post('/register', function(req, res, next) {
     // userPwd:req.param("userPwd"),
     userName:req.body.userName,
     userEmail:req.body.userEmail,
-    userPwd:sha1(req.body.userPwd)  //密码加密再存入数据库
+    // userPwd:sha1(req.body.userPwd)  //密码加密再存入数据库
+    userPwd:req.body.userPwd //密码加密再存入数据库
   })
 
   // userRegister.createTime = moment(Date.now).format('YYYY-MM-DD HH:mm:ss');
@@ -41,7 +43,7 @@ router.post('/register', function(req, res, next) {
         } else {
           res.json({
             status:"1",
-            message:'成功存入！',
+            message:'注册成功！',
             token: jwt.sign({
               userEmail: user.userName
             },"ITlearn",{
@@ -66,7 +68,8 @@ router.post('/login', function(req, res, next) {
     // userPwd:req.param("userPwd")
     // userName:req.body.userName,
     userEmail:req.body.userEmail,
-    userPwd:sha1(req.body.userPwd)
+    // userPwd:sha1(req.body.userPwd)
+    userPwd:req.body.userPwd
   })
   User.findOne({
     userEmail: userLogin.userEmail
