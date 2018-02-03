@@ -37,7 +37,12 @@ let UserSchema = new Schema({
     //     ref: 'sharelink'
     // }],
     lovelink:[
-        {type: Schema.Types.ObjectId,ref: 'sharelink',}
+        
+        {
+            type: Schema.Types.ObjectId,ref: 'sharelink',
+        }
+        // isHeartClick:{type:Boolean,default:false}
+             
     ],
     lovelink: [{
         type: Schema.Types.ObjectId,

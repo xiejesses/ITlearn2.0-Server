@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
     let pageSize = parseInt(req.param("pageSize"));
     let skip = (page - 1) * pageSize;
 
-    let sharelinkModel = ShareLink.find().populate({path:'author',select:'userName userEmail'}).skip(skip).limit(pageSize);
+    let sharelinkModel = ShareLink.find().populate({path:'author',select:'userName userEmail lovelink'}).skip(skip).limit(pageSize);
     sharelinkModel.exec(function(err,doc) {
         if (err) {
             res.json({
@@ -107,6 +107,7 @@ router.post('/addlovelink',function(req, res, next) {
             if(lovelink_index === -1) {
                 //不存在
                 user.lovelink.push(lovelink_id);
+                user.lovelink.isHeartClick = true,
                 user.save();
                 res.json({
                     status:"1",
