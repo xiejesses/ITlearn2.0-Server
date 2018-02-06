@@ -61,5 +61,26 @@ router.get("/fetchgroup", function (req, res, next) {
     })
 })
 
+router.get('/fetchgroupdetail', function(req, res, nex) {
+    let g_id = req.param('g_id');
+    // console.log(req.param('g_id'));
+    let groupModel = Group.findOne({_id:g_id}).populate({path:'author',select:'userName userEmail'});
+    groupModel.exec((err, doc) => {
+        if (err) {
+            res.json({
+                status:'0',
+                msg:err.message
+            });
+        } else {
+            // console.log(doc);
+            res.json({
+                status:'1',
+                // msg:'',
+                result:doc
+            });
+        }
+    })
+})
+
 
 module.exports = router;

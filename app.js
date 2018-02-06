@@ -15,6 +15,7 @@ var shareLink = require('./routes/shareLink');
 var testJWT = require('./routes/testJWT');
 var Tags = require('./routes/tags');
 var Group = require('./routes/group');
+var Topic = require('./routes/topic');
 // var testNewModel = require('./routes/testNewModel');
 
 var app = express();
@@ -47,6 +48,7 @@ app.use('/sharelink',shareLink)
 app.use('/token',testJWT)
 app.use('/tags',Tags)
 app.use('/group',Group)
+app.use('/topic',Topic)
 
 // app.use('/testnewmodel',testNewModel)
 

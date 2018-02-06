@@ -12,6 +12,11 @@ let GroupSchema = new Schema({
         trim:true,
     },
     groupIntro: String,
+    groupTopic: [{
+        type: Schema.Types.ObjectId,
+        ref: 'topic'
+    }],
+    // groupTopic:[{type: Schema.Types.ObjectId, ref: 'topic'}],
     // tags: Array,
     member:{ type:Number,default:0},
     // voteActive: {type:Boolean,default:false},
