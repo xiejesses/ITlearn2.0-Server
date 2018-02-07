@@ -19,7 +19,8 @@ let TopicSchema = new Schema({
     // voteNumber:{ type:Number,default:0},
     // voteActive: {type:Boolean,default:false},
     createTime: {type: Date, default: Date.now},
-    author: {type: Schema.Types.ObjectId, ref: 'user'}
+    author: {type: Schema.Types.ObjectId, ref: 'user'},
+    comments: [{type: Schema.Types.ObjectId, ref: 'comment'}]
 })
 
 module.exports = mongoose.model('topic',TopicSchema)

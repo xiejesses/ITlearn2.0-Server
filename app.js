@@ -16,6 +16,7 @@ var testJWT = require('./routes/testJWT');
 var Tags = require('./routes/tags');
 var Group = require('./routes/group');
 var Topic = require('./routes/topic');
+var Comments = require('./routes/comment');
 // var testNewModel = require('./routes/testNewModel');
 
 var app = express();
@@ -49,6 +50,7 @@ app.use('/token',testJWT)
 app.use('/tags',Tags)
 app.use('/group',Group)
 app.use('/topic',Topic)
+app.use('/comment',Comments)
 
 // app.use('/testnewmodel',testNewModel)
 

@@ -83,6 +83,27 @@ router.get("/fetchtopic", function(req, res, next) {
     })
 })
 
+router.get('/fetchtopicdetail', function(req, res, nex) {
+    let t_id = req.param('t_id');
+    // console.log(req.param('g_id'));
+    let topicModel = Topic.findOne({_id:t_id}).populate({path:'author',select:'userName userEmail'});
+    topicModel.exec((err, doc) => {
+        if (err) {
+            res.json({
+                status:'0',
+                msg:err.message
+            });
+        } else {
+            // console.log(doc);
+            res.json({
+                status:'1',
+                // msg:'',
+                result:doc
+            });
+        }
+    })
+})
+
 
 
 module.exports = router;
