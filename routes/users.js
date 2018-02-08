@@ -8,8 +8,21 @@ const sha1 = require('sha1')
 const objectIdToTimestamp = require('objectid-to-timestamp')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/getlovelink', function(req, res, next) {
+    User.findOne({userName:req.param('userName')}).select({lovelink:1})
+    .exec((err, doc) => {
+      if(err) {
+        res.json({
+          status:'0',
+          message:err.message
+        })
+      } else {
+        res.json({
+          status:'1',
+          doc
+        })
+      }
+    })
 });
 
 router.post('/register', function(req, res, next) {

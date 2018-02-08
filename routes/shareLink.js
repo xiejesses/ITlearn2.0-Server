@@ -86,6 +86,36 @@ router.post('/submit',function(req, res, next) {
 })
 router.post('/addlovelink',function(req, res, next) {
     
+    // User.findOne({
+    //         // userName:req.param('userName'),
+    //         userName:req.body.userName,
+    //         // lovelink:req.param('_id')
+    //     }, (err,user) => {
+    //         if(err){
+    //             res.json({
+    //                 // err,
+    //                 status:'0',
+    //                 message:'用户不存在'
+    //             })
+    //         } else {
+    //             // User.findOne({"lovelink.$.linkid":req.body._id},(err, doc) => {
+    //             //     if(err) {
+    //             //         console.log('找不到')
+    //             //     } else {
+    //             //         console.log('找到');
+    //             //         console.log(doc)
+    //             //     }
+    //             // })
+    //             var doc = user.lovelink.id(req.body._id);
+    //             console.log(doc)
+    //             if(!doc) {
+    //                 //不存在
+
+    //             }
+    //         }
+    //     })
+
+    // 正确
     User.findOne({
         // userName:req.param('userName'),
         userName:req.body.userName,
@@ -98,20 +128,21 @@ router.post('/addlovelink',function(req, res, next) {
                 message:'用户不存在'
             })
         } else {
-            // res.json({
-            //     user
-            // })
-            // let lovelink_id = req.param('_id');
+
             let lovelink_id = req.body._id;
             lovelink_index = user.lovelink.indexOf(lovelink_id)
             if(lovelink_index === -1) {
                 //不存在
+                console.log(user.lovelink.isHeartClick)
                 user.lovelink.push(lovelink_id);
-                user.lovelink.isHeartClick = true,
+                // user.lovelink.isHeartClick = true,
                 user.save();
+                console.log(user.lovelink)
+                // console.log(user.lovelink.isHeartClick)
                 res.json({
                     status:"1",
                     // heartclick:true,
+                    lovelink:user.lovelink,
                     message:'成功添加收藏！'
                 })
             } else {
@@ -120,6 +151,7 @@ router.post('/addlovelink',function(req, res, next) {
                 res.json({
                     status:"2",
                     // heartclick:false,
+                    lovelink:user.lovelink,
                     message:'取消收藏！'
                 })
             }

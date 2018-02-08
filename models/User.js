@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 const objectId = Schema.Types.ObjectId;
 let sharelink = require('./ShareLink')
 
+// let lovelinkSchema = new Schema({
+//     linkid:{type: Schema.Types.ObjectId,ref: 'sharelink',},
+//     isHeartClick:{type:Boolean,default:false}
+// })
+
 let UserSchema = new Schema({
     // _id: Schema.Types.ObjectId,
     // userName:String,
@@ -32,18 +37,9 @@ let UserSchema = new Schema({
         type: Date, 
         default: Date.now
     },
-    // sharelink: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'sharelink'
-    // }],
-    lovelink:[
-        
-        {
-            type: Schema.Types.ObjectId,ref: 'sharelink',
-        }
-        // isHeartClick:{type:Boolean,default:false}
-             
-    ],
+
+    // lovelink:[lovelinkSchema],
+
     lovelink: [{
         type: Schema.Types.ObjectId,
         ref: 'sharelink'
