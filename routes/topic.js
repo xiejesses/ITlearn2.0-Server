@@ -4,7 +4,9 @@ const Group = require('../models/Group');
 const Topic = require('../models/Topic');
 const User = require('./../models/User');
 
-
+/**
+ * 创建话题
+ */
 router.post("/createtopic", function (req, res, next) {
 
     User.findOne({userName:req.body.userName}, (err, user) => {
@@ -34,9 +36,6 @@ router.post("/createtopic", function (req, res, next) {
                             group.save();
                             res.json({
                                 status:"1",
-                                // message:"创建成功！",
-                                // doc
-                                // group
                             })
                         }
                     })
@@ -47,13 +46,15 @@ router.post("/createtopic", function (req, res, next) {
     })
 });
 
+/**
+ * 获取话题
+ */
 router.get("/fetchtopic", function(req, res, next) {
     let page = parseInt(req.param("page"));
     let pageSize = parseInt(req.param("pageSize"));
     let skip = (page - 1) * pageSize;
 
     let g_id = req.param('g_id');
-    // console.log(req.param('g_id'));
     /**
      * 运用了 populate 嵌套，这样就可以查询出对应 topic 里的 author
      */
@@ -68,24 +69,23 @@ router.get("/fetchtopic", function(req, res, next) {
                 msg:err.message
             });
         } else {
-            // User.findOne({_id:doc.groupTopic.})
-            // console.log(doc);
             res.json({
                 status:'1',
                 msg:'',
                 result:{
                     count:doc.groupTopic.length,
                     list:doc,
-                    // author:
                 }
             });
         }
     })
 })
 
+/**
+ * 获取当前话题详情
+ */
 router.get('/fetchtopicdetail', function(req, res, nex) {
     let t_id = req.param('t_id');
-    // console.log(req.param('g_id'));
     let topicModel = Topic.findOne({_id:t_id}).populate({path:'author',select:'userName userEmail'});
     topicModel.exec((err, doc) => {
         if (err) {
@@ -94,16 +94,12 @@ router.get('/fetchtopicdetail', function(req, res, nex) {
                 msg:err.message
             });
         } else {
-            // console.log(doc);
             res.json({
                 status:'1',
-                // msg:'',
                 result:doc
             });
         }
     })
 })
-
-
 
 module.exports = router;

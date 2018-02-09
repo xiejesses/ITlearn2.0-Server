@@ -5,7 +5,9 @@ var Reply = require('../models/Reply');
 const Topic = require('../models/Topic');
 const User = require('./../models/User');
 
-
+/**
+ * 创建评论
+ */
 router.post("/createcomment", function (req, res, next) {
     
     User.findOne({userName:req.body.userName}, (err, user) => {
@@ -34,9 +36,6 @@ router.post("/createcomment", function (req, res, next) {
                             topic.save();
                             res.json({
                                 status:"1",
-                                // message:"创建成功！",
-                                // doc
-                                // group
                             })
                         }
                     })
@@ -46,6 +45,10 @@ router.post("/createcomment", function (req, res, next) {
         }
     }).catch(err => res.json(err))
 });
+
+/**
+ * 获取评论
+ */
 router.get("/fetchcomment", function(req, res, next) {
     let page = parseInt(req.param("page"));
     let pageSize = parseInt(req.param("pageSize"));
@@ -70,21 +73,21 @@ router.get("/fetchcomment", function(req, res, next) {
                 msg:err.message
             });
         } else {
-            // User.findOne({_id:doc.groupTopic.})
-            // console.log(doc);
             res.json({
                 status:'1',
                 msg:'',
                 result:{
                     count:doc.comments.length,
                     list:doc,
-                    // author:
                 }
             });
         }
     })
 })
 
+/**
+ * 创建回复
+ */
 router.post("/createreply", function (req, res, next) {
     
     User.findOne({userName:req.body.userName}, (err, user) => {
@@ -106,11 +109,6 @@ router.post("/createreply", function (req, res, next) {
                         message:'存入数据失败，请重试！'
                     })
                 } else {
-                    // console.log(`req.body.c_id:${req.body.c_id}`)
-                    // console.log(`req.body.name:${req.body.userName}`)
-                    // res.json({
-                    //     reply
-                    // })
                     let commentModel = Comments.findOne({_id:req.body.c_id}).populate({path:'reply'})
                     commentModel.exec((err, this_comment) => {
                         if (err) {
@@ -119,9 +117,6 @@ router.post("/createreply", function (req, res, next) {
                                 msg:err.message
                             });
                         } else {
-                            // res.json({
-                            //     doc
-                            // })
                             this_comment.replys.push(reply._id);
                             this_comment.save();
                             res.json({

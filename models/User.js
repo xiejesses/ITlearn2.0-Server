@@ -1,6 +1,13 @@
-/*
-**用户模型
-*/
+/**
+ * 用户模型
+ * userName   : 用户名
+ * userEmail  : 邮箱
+ * userPwd    : 密码
+ * lovelink   : 收藏文章，ref 指向 sharelink 模型
+ * following  : 正在关注的用户
+ * follower   : 粉丝
+ * createTime : 注册时间
+ */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const objectId = Schema.Types.ObjectId;
@@ -12,10 +19,6 @@ let sharelink = require('./ShareLink')
 // })
 
 let UserSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
-    // userName:String,
-    // userEmail:String,
-    // userPwd:String,
     userName:{
         type:String,
         unique:true,

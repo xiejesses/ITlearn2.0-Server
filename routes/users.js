@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-// const User = require('./../models/userModel');
 const User = require('./../models/User');
 const jwt = require('jsonwebtoken');
 const moment = require('moment')
 const sha1 = require('sha1')
 const objectIdToTimestamp = require('objectid-to-timestamp')
 
-/* GET users listing. */
+/**
+ * 获取用户收藏的文章
+ */
 router.get('/getlovelink', function(req, res, next) {
     User.findOne({userName:req.param('userName')}).select({lovelink:1})
     .exec((err, doc) => {
@@ -25,18 +26,17 @@ router.get('/getlovelink', function(req, res, next) {
     })
 });
 
+/**
+ * 用户注册
+ */
 router.post('/register', function(req, res, next) {
+
   let userRegister = new User({
-    // userName:req.param("userName"),
-    // userEmail:req.param("userEmail"),
-    // userPwd:req.param("userPwd"),
     userName:req.body.userName,
     userEmail:req.body.userEmail,
     // userPwd:sha1(req.body.userPwd)  //密码加密再存入数据库
-    userPwd:req.body.userPwd //密码加密再存入数据库
+    userPwd:req.body.userPwd //开发暂时不用加密
   })
-
-  // userRegister.createTime = moment(Date.now).format('YYYY-MM-DD HH:mm:ss');
 
   User.findOne({
     userName: userRegister.userName
@@ -57,8 +57,9 @@ router.post('/register', function(req, res, next) {
           res.json({
             status:"1",
             message:'注册成功！',
-            token: jwt.sign({
-              userEmail: user.userName
+            //返回 token, 秘钥：ITlearn, 开发用过期时间是 1 天
+            token: jwt.sign({  
+              userName: user.userName
             },"ITlearn",{
               expiresIn:'1d'
             }),
@@ -74,15 +75,14 @@ router.post('/register', function(req, res, next) {
   }).catch(err => res.json(err))
 })
 
+/**
+ * 用户登录
+ */
 router.post('/login', function(req, res, next) {
   let userLogin = new User({
-    // userName:req.param("userName"),
-    // userEmail:req.param("userEmail"),
-    // userPwd:req.param("userPwd")
-    // userName:req.body.userName,
     userEmail:req.body.userEmail,
     // userPwd:sha1(req.body.userPwd)
-    userPwd:req.body.userPwd
+    userPwd:req.body.userPwd //开发暂时不用加密
   })
   User.findOne({
     userEmail: userLogin.userEmail
@@ -107,13 +107,6 @@ router.post('/login', function(req, res, next) {
             userName:user.userName,
             userEmail:user.userEmail
           },
-          // userEmail:user.userEmail,
-          // userName:user.userName
-          // session: req.session,
-          // name: user.name,
-          // 账户创建日期
-          // time: moment(objectIdToTimestamp(user._id))
-          //   .format('YYYY-MM-DD HH:mm:ss')
         })
       } else {
         res.json({
@@ -124,76 +117,5 @@ router.post('/login', function(req, res, next) {
     })
     .catch(err => res.json(err))
 });
-
-
-
-
-
-
-// router.post("/login", function(req,res,next) {
-//   // let param = {
-//   //   userEmail:req.body.userEmail,
-//   //   userPwd:req.body.userPwd
-//   // }
-//   let param = {
-//     userEmail:req.param("userEmail"),
-//     userPwd:req.param("userPwd")
-//   }
-//   console.log(param);
-//   User.findOne(param,function(err,doc) {
-
-//     if(doc) {
-//       res.json({
-//         err:err,
-//         doc:doc,
-//         status:'0',
-//         msg:'',
-//         token: jwt.sign({
-//           name: doc.userEmail
-//         },"ITlearn",{
-//           expiresIn:'1d'
-//         }),
-//         result:{
-//           userEmail:doc.userEmail
-//         }
-//       })
-//     } else if(err) {
-//       res.json({
-//         status:"1",
-//         msg:err.message
-//     });
-//     } else {
-//       return new Error('The database does error');
-//     }
-
-
-//     // if(err){
-//     //   res.json({
-//     //       status:"1",
-//     //       msg:err.message
-//     //   });
-//     // } else {
-//     //   if(doc) {
-//     //     res.json({
-//     //       err:err,
-//     //       doc:doc,
-//     //       status:'0',
-//     //       msg:'',
-//     //       token: jwt.sign({
-//     //         name: doc.userEmail
-//     //       },"ITlearn",{
-//     //         expiresIn:'1d'
-//     //       }),
-//     //       result:{
-//     //         userEmail:doc.userEmail
-//     //       }
-//     //     })
-//     //   }
-//     // }
-//   }).catch(err => {
-//     res.json(err)
-//   })
-// })
-
 
 module.exports = router;

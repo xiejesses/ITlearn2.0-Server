@@ -3,7 +3,9 @@ var router = express.Router();
 const Group = require('../models/Group');
 const User = require('./../models/User');
 
-
+/**
+ * 创建小组
+ */
 router.post("/creategroup", function (req, res, next) {
     
     User.findOne({userName:req.body.userName}, (err, user) => {
@@ -33,6 +35,9 @@ router.post("/creategroup", function (req, res, next) {
     })
 });
 
+/**
+ * 获取小组
+ */
 router.get("/fetchgroup", function (req, res, next) {
 
     let page = parseInt(req.param("page"));
@@ -47,23 +52,23 @@ router.get("/fetchgroup", function (req, res, next) {
                 msg:err.message
             });
         } else {
-            // console.log(doc);
             res.json({
                 status:'1',
                 msg:'',
                 result:{
                     count:doc.length,
                     list:doc,
-                    // author:
                 }
             });
         }
     })
 })
 
+/**
+ * 获取当前小组详细内容
+ */
 router.get('/fetchgroupdetail', function(req, res, nex) {
     let g_id = req.param('g_id');
-    // console.log(req.param('g_id'));
     let groupModel = Group.findOne({_id:g_id}).populate({
         path:'author',select:'userName userEmail'
     });
@@ -74,10 +79,8 @@ router.get('/fetchgroupdetail', function(req, res, nex) {
                 msg:err.message
             });
         } else {
-            // console.log(doc);
             res.json({
                 status:'1',
-                // msg:'',
                 result:doc
             });
         }

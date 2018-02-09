@@ -4,20 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+//引入数据库文件
 require('./models/db');
 
+//用于创建 token 和验证 token
 const jwt = require('jsonwebtoken');
 var expressJWT = require('express-jwt');
 
+//接口
 var index = require('./routes/index');
 var users = require('./routes/users');
 var shareLink = require('./routes/shareLink');
-var testJWT = require('./routes/testJWT');
 var Tags = require('./routes/tags');
 var Group = require('./routes/group');
 var Topic = require('./routes/topic');
 var Comments = require('./routes/comment');
-// var testNewModel = require('./routes/testNewModel');
 
 var app = express();
 
@@ -38,7 +40,7 @@ var secretOrPrivateKey = "ITlearn"  //加密token 校验token时要使用
 app.use(expressJWT({
     secret: secretOrPrivateKey   
 }).unless({
-    path: ['/token/get','/tags','/testnewmodel/save','/testnewmodel/addlovelink','/testnewmodel/findlovelink','/sharelink','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
+    path: ['/token/get','/tags','/sharelink','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
 }));
 
 
@@ -52,9 +54,7 @@ app.use('/group',Group)
 app.use('/topic',Topic)
 app.use('/comment',Comments)
 
-// app.use('/testnewmodel',testNewModel)
-
-
+//token 验证错误返回 401
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {   
       //  错误处理

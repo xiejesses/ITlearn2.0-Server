@@ -1,6 +1,7 @@
-/*
-**标签模型
-*/
+/**
+ * 标签模型
+ * tags : 标签
+ */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
