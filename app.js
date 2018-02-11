@@ -48,7 +48,7 @@ app.use(expressJWT({
 app.use('/', index);
 app.use('/users', users);
 app.use('/sharelink',shareLink)
-app.use('/token',testJWT)
+// app.use('/token',testJWT)
 app.use('/tags',Tags)
 app.use('/group',Group)
 app.use('/topic',Topic)
