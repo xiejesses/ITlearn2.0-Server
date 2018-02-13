@@ -2,7 +2,7 @@
  * 数据库连接
  * 数据库名: ITlearn
  */
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/ITlearn');
 
