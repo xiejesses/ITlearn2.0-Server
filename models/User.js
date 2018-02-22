@@ -4,6 +4,7 @@
  * userEmail  : 邮箱
  * userPwd    : 密码
  * lovelink   : 收藏文章，ref 指向 sharelink 模型
+ * lovegroup  : 加入的小组，ref 指向 group 模型
  * following  : 正在关注的用户
  * follower   : 粉丝
  * createTime : 注册时间
@@ -51,6 +52,10 @@ let UserSchema = new Schema({
     lovelink: [{
         type: Schema.Types.ObjectId,
         ref: 'sharelink'
+    }],
+    lovegroup: [{
+        type: Schema.Types.ObjectId,
+        ref: 'group'
     }],
     // following: Array,
     // follower: Array

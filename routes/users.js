@@ -30,6 +30,29 @@ router.get('/getlovelink', function (req, res, next) {
       }
     })
 });
+/**
+ * 获取用户加入的小组
+ */
+router.get('/getlovegroup', function (req, res, next) {
+  User.findOne({
+      userName: req.param('userName')
+    }).select({
+      lovegroup: 1
+    })
+    .exec((err, doc) => {
+      if (err) {
+        res.json({
+          status: '0',
+          message: err.message
+        })
+      } else {
+        res.json({
+          status: '1',
+          doc
+        })
+      }
+    })
+});
 
 /**
  * 用户注册

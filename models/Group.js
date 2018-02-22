@@ -22,7 +22,10 @@ let GroupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'topic'
     }],
-    member:{ type:Number,default:0},
+    member:[{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
     createTime: {type: Date, default: Date.now},
     author: {type: Schema.Types.ObjectId, ref: 'user'}
 })
