@@ -36,6 +36,11 @@ let UserSchema = new Schema({
         required:true,
         trim:true
     },
+    userIntro:{
+        type:String,
+        // trim:true,
+        default:"完善自我介绍"
+    },
     createTime:{
         type: Date, 
         default: Date.now
@@ -47,8 +52,16 @@ let UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'sharelink'
     }],
-    following: Array,
-    follower: Array
+    // following: Array,
+    // follower: Array
+    following:[{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
+    follower:[{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
 })
 
 module.exports = mongoose.model('user',UserSchema);

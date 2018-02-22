@@ -40,7 +40,7 @@ var secretOrPrivateKey = "ITlearn"  //加密token 校验token时要使用
 app.use(expressJWT({
     secret: secretOrPrivateKey   
 }).unless({
-    path: ['/token/get','/tags','/sharelink','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
+    path: ['/token/get','/tags','/sharelink','/group/fetchgroup','/users/login','/users/register']  //除了这个地址，其他的URL都需要验证
 }));
 
 
