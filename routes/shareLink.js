@@ -142,4 +142,28 @@ router.post('/addlovelink', function (req, res, next) {
     })
 })
 
+/**
+ * 投票
+ */
+router.post('/vote', function (req, res, next) {
+    ShareLink.update({
+        _id: req.body.article_id
+      },{"$inc":{"voteNumber":1}}, //利用$inc，使voteNumber自增一
+      (err,doc) => {
+        if(err) {
+          res.json({
+            status: "0",
+            message: "更新错误"
+          })
+        } else {
+          res.json({
+            status:'1',
+            message:'投票成功',
+          })
+        }
+      })
+      
+      // .catch(err => res.json(err))
+  });
+
 module.exports = router;
