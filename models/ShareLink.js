@@ -15,6 +15,7 @@ const moment = require('moment')
 
 let ShareLinkSchema = new Schema({
     title: String,
+    urlhostname:String,
     url: String,
     tags: Array,
     voteNumber:{ type:Number,default:0},

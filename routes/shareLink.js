@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 const User = require('./../models/User');
 const ShareLink = require('./../models/ShareLink');
+const url = require('url')
 
 /**
  * 获取首页文章列表
@@ -72,7 +73,7 @@ router.get("/", function (req, res, next) {
  * 分享文章链接
  */
 router.post('/submit', function (req, res, next) {
-
+    let myurl = url.parse(req.body.url)
     User.findOne({
         userName: req.body.userName
     }, (err, user) => {
@@ -83,6 +84,7 @@ router.post('/submit', function (req, res, next) {
         } else {
             let s_sharelink = new ShareLink({
                 url: req.body.url,
+                urlhostname: myurl.hostname,
                 title: req.body.title,
                 tags: req.body.tags,
                 author: user._id
