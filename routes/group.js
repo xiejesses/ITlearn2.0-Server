@@ -46,7 +46,7 @@ router.get("/fetchgroup", function (req, res, next) {
     let skip = (page - 1) * pageSize;
 
     if (!uName) {
-        let groupModel = Group.find().populate({path:'author',select:'userName userEmail'}).skip(skip).limit(pageSize);
+        let groupModel = Group.find().populate({path:'author',select:'userName userEmail'}).skip(skip).limit(pageSize).sort({createTime:-1});
         groupModel.exec(function(err,doc) {
             if (err) {
                 res.json({

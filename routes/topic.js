@@ -60,6 +60,9 @@ router.get("/fetchtopic", function(req, res, next) {
      */
     let groupModel = Group.findOne({_id:g_id}).populate({
         path:'groupTopic',
+        options: {
+            sort: { createTime: -1},
+        },
         populate:{path:'author',select:'userName userEmail'}
     });
     groupModel.exec((err, doc) => {

@@ -60,8 +60,14 @@ router.get("/fetchcomment", function(req, res, next) {
      */
     let topicModel = Topic.findOne({_id:t_id}).populate({
         path:'comments',
+        options: {
+            sort: { createTime: -1},
+        },
         populate:{
             path:'author replys',
+            options: {
+                sort: { createTime: -1},
+            },
             select:'userName userEmail content createTime author',
             populate:{path:'author',select:'userName userEmail'}  //填充 replys 里的 author
         }

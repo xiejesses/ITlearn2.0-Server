@@ -18,7 +18,7 @@ router.get("/", function (req, res, next) {
         let sharelinkModel = ShareLink.find().populate({
             path: 'author',
             select: 'userName userEmail lovelink'
-        }).skip(skip).limit(pageSize);
+        }).skip(skip).limit(pageSize).sort({createTime:-1});
         sharelinkModel.exec(function (err, doc) {
             if (err) {
                 res.json({
@@ -42,7 +42,7 @@ router.get("/", function (req, res, next) {
             path:'lovelink',
             options: {
                 limit: pageSize,
-                // sort: { created: -1},
+                sort: { createTime: -1},
                 skip: skip
             },
             populate:{path:'author',select:'userName userEmail'}
