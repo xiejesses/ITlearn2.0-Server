@@ -7,7 +7,13 @@ const Schema = mongoose.Schema;
 
 
 let TagsSchema = new Schema({
-    tags:Array
+    // tags:Array
+    name:String,
+    styleObject:{
+        background:{type:String,default:'#ffffff'},
+        color:{type:String,default:'#54595f'}
+    }
+    // label:String
 })
 
 module.exports = mongoose.model('tags',TagsSchema)

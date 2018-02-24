@@ -18,6 +18,10 @@ let ShareLinkSchema = new Schema({
     urlhostname:String,
     url: String,
     tags: Array,
+    // tags:[{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'tags'
+    // }],
     voteNumber:{ type:Number,default:0},
     createTime: {type: Date, default: Date.now},
     author: {type: Schema.Types.ObjectId, ref: 'user'}
