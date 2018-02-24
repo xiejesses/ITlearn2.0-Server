@@ -283,5 +283,57 @@ router.post('/following', function (req, res, next) {
     }) 
 });
 
+/**
+ * 获取用户粉丝与正在关注
+ */
+router.get('/getfollowUser', function (req, res, next) {
+  let followRel = req.param('followRel');
+  if(followRel == "following") {
+    User.findOne({
+      userName: req.param('userName')
+    }).select({
+      following: 1
+    }).populate({
+      path:'following',
+      select:{userPwd:0}
+    })
+    .exec((err, doc) => {
+      if (err) {
+        res.json({
+          status: '0',
+          message: err.message
+        })
+      } else {
+        res.json({
+          status: '1',
+          result:doc.following
+        })
+      }
+    })
+  } else {
+    User.findOne({
+      userName: req.param('userName')
+    }).select({
+      follower: 1
+    }).populate({
+      path:'follower',
+      select:{userPwd:0}
+    })
+    .exec((err, doc) => {
+      if (err) {
+        res.json({
+          status: '0',
+          message: err.message
+        })
+      } else {
+        res.json({
+          status: '1',
+          result:doc.follower
+        })
+      }
+    })
+  }
+  
+});
 
 module.exports = router;

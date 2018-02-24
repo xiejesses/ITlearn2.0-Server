@@ -40,7 +40,7 @@ let UserSchema = new Schema({
     userIntro:{
         type:String,
         // trim:true,
-        default:"完善自我介绍"
+        default:"自我介绍"
     },
     createTime:{
         type: Date, 

@@ -10,7 +10,7 @@ let TagsSchema = new Schema({
     // tags:Array
     name:String,
     styleObject:{
-        background:{type:String,default:'#ffffff'},
+        background:{type:String,default:'#f5f7fa'},
         color:{type:String,default:'#54595f'}
     }
     // label:String
